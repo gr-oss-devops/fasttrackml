@@ -417,15 +417,10 @@ jobs:
             echo "::endgroup::"
           done
           echo "::group::Pushing merged manifest to $repo for tags: ${tags[@]}"
-          output=$(docker buildx imagetools create \
-            $(printf -- "--tag ${{ vars.DOCKER_REPO }}:%s " "${tags[@]}") \
-            $(printf "${{ vars.DOCKER_REPO }}@%s " "${digests[@]}"))
-          newdigests=($(echo "$output" | grep -oE 'sha256:[a-f0-9]{64}'))
-          # Print each digest
-          echo "Extracted Digests:"
-          for digest in "${newdigests[@]}"; do
-            echo "$digest"
-          done
+          docker buildx imagetools create \
+            $(printf -- "--tag $repo:%s " ${tags[@]}) \
+            $(printf "$repo@%s " ${digests[@]})
+          docker images
           echo "::endgroup::"
 
   release:
