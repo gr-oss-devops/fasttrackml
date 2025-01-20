@@ -420,7 +420,7 @@ jobs:
           docker buildx imagetools create \
             $(printf -- "--tag $repo:%s " ${tags[@]}) \
             $(printf "$repo@%s " ${digests[@]})
-          docker images
+          docker buildx imagetools inspect $repo:${tags[0]}
           echo "::endgroup::"
 
   release:
