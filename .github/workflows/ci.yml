@@ -420,7 +420,7 @@ jobs:
           docker buildx imagetools create \
             $(printf -- "--tag $repo:%s " ${tags[@]}) \
             $(printf "$repo@%s " ${digests[@]})
-          docker buildx imagetools inspect $repo:${tags[0]} --format '{{json .}}'
+          docker buildx imagetools inspect docker.io/gresearch/fasttrackml:edge --format '{{json .}}'
           echo "::endgroup::"
 
   release:
