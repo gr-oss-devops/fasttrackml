@@ -130,11 +130,13 @@ jobs:
           digests+=($multiarch_digest)
           # Output digests as a JSON array for use in a matrix
           echo "digests=$(printf '%s\n' "${digests[@]}" | jq -R . | jq -cs .)" >> $GITHUB_OUTPUT
+
+      - name: Debug
+        run: |
+          echo ${{ steps.publish-docker-hub.outputs.digests }}
+
     outputs:
       digests: ${{ steps.publish-docker-hub.outputs.digests }}
-
-    - name: Debug
-      runt: echo ${{ steps.publish-docker-hub.outputs.digests }}
 
 #  attest-docker-images:
 #    name: Publish Docker images attestations
