@@ -125,6 +125,7 @@ jobs:
             $(printf -- "--tag ${{ vars.DOCKER_REPO }}:%s " ${tags[@]}) \
             $(printf "${{ vars.DOCKER_REPO }}@%s " ${digests[@]})
           echo "::endgroup::"
+          docker buildx imagetools inspect ${{ vars.DOCKER_REPO }}:${tags[0]} --format '{{json .}}'
           multiarch_digest=$(docker buildx imagetools inspect ${{ vars.DOCKER_REPO }}:${tags[0]} --format '{{json .}}' | jq -r '.manifest.digest')
           digests+=($multiarch_digest)
           # Output digests as a JSON array for use in a matrix
