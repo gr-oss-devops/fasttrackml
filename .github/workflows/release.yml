@@ -127,12 +127,13 @@ jobs:
           echo "::endgroup::"
           multiarch_digest=$(docker buildx imagetools inspect ${{ vars.DOCKER_REPO }}:${tags[0]} --format '{{json .}}' | jq -r '.manifest.digest')
           digests+=($multiarch_digest)
-          echo "Print out digests"
-          echo $digests
           # Output digests as a JSON array for use in a matrix
           echo "digests=$(printf '%s\n' "${digests[@]}" | jq -R . | jq -cs .)" >> $GITHUB_OUTPUT
     outputs:
       digests: ${{ steps.publish-docker-hub.outputs.digests }}
+
+    - name: Debug
+      runt: echo ${{ steps.publish-docker-hub.outputs.digests }}
 
 #  attest-docker-images:
 #    name: Publish Docker images attestations
