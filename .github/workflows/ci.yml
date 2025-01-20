@@ -407,7 +407,7 @@ jobs:
       - name: Push to GitHub Container Registry
         run: |
           repo=${{ steps.repo.outputs.name }}
-          tags=($(tar -xOf $(ls fasttrackml-oci-*.tar | head -n1) index.json | jq -r '.manifests[].annotations."org.opencontainers.image.ref.name"'))
+          tags=(main edge)
           for image in fasttrackml-oci-*.tar
           do
             digest=$(tar -xOf $image index.json | jq -r '.manifests[0].digest')
